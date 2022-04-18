@@ -3,5 +3,51 @@ argo-cd:
     secret:
       argocdServerAdminPassword: "$2a$12$ryXTlXq15SNnaMYbsSHX..fyWmEYZ3CVGHBSpcOEM3af8pwoNa3mC"
   server:
+    additionalApplications:
+      - name: graylog
+        project: default
+        source:
+          repoURL: https://github.com/AhmedGrati/graylog-helm-chart
+          targetRevision: HEAD
+          path: graylog-helm-chart
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: monitoring
+        syncPolicy:
+          syncOptions:
+            - CreateNamespace=true
+          automated:
+            selfHeal: true
+            prune: true
+      - name: elastic
+        project: default
+        source:
+          repoURL: https://github.com/AhmedGrati/elastic-helm-chart
+          targetRevision: HEAD
+          path: elastic-helm-chart
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: database
+        syncPolicy:
+          syncOptions:
+            - CreateNamespace=true
+          automated:
+            selfHeal: true
+            prune: true
+      - name: mongodb
+        project: default
+        source:
+          repoURL: https://github.com/AhmedGrati/mongo-helm-chart
+          targetRevision: HEAD
+          path: mongo-helm-chart
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: database
+        syncPolicy:
+          syncOptions:
+            - CreateNamespace=true
+          automated:
+            selfHeal: true
+            prune: true
     service:
       type: NodePort
