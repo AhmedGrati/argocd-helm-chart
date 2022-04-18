@@ -8,6 +8,9 @@ argo-cd:
         project: default
         source:
           repoURL: https://github.com/AhmedGrati/graylog-helm-chart
+          helm:
+            valueFiles:
+              - values.yaml
           targetRevision: HEAD
           path: graylog-helm-chart
         destination:
@@ -24,6 +27,9 @@ argo-cd:
         source:
           repoURL: https://github.com/AhmedGrati/elastic-helm-chart
           targetRevision: HEAD
+          helm:
+            valueFiles:
+              - values.yaml
           path: elastic-helm-chart
         destination:
           server: https://kubernetes.default.svc
@@ -39,6 +45,9 @@ argo-cd:
         source:
           repoURL: https://github.com/AhmedGrati/mongo-helm-chart
           targetRevision: HEAD
+          helm:
+            valueFiles:
+              - values.yaml
           path: mongo-helm-chart
         destination:
           server: https://kubernetes.default.svc
