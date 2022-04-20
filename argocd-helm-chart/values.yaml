@@ -4,6 +4,7 @@ argo-cd:
       argocdServerAdminPassword: "$2a$12$ryXTlXq15SNnaMYbsSHX..fyWmEYZ3CVGHBSpcOEM3af8pwoNa3mC"
   server:
     additionalApplications:
+      # GRAYLOG APPLICATION
       - name: graylog
         project: default
         source:
@@ -22,6 +23,7 @@ argo-cd:
           automated:
             selfHeal: true
             prune: true
+      # ELASTIC SEARCH APPLICATION
       - name: elastic
         project: default
         source:
@@ -40,6 +42,7 @@ argo-cd:
           automated:
             selfHeal: true
             prune: true
+      # MONGODB APPLICATION
       - name: mongodb
         project: default
         source:
@@ -58,5 +61,101 @@ argo-cd:
           automated:
             selfHeal: true
             prune: true
+      # POSTGRESQL HELM CHART
+      - name: postgresql
+        project: default
+        source:
+          repoURL: https://github.com/AhmedGrati/postgresql-helm-chart
+          targetRevision: HEAD
+          helm:
+            valueFiles:
+              - values.yaml
+          path: postgresql-helm-chart
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: database
+        syncPolicy:
+          syncOptions:
+            - CreateNamespace=true
+          automated:
+            selfHeal: true
+            prune: true
+      # LOGSTASH APPLICATION
+      - name: logstash
+        project: default
+        source:
+          repoURL: https://github.com/AhmedGrati/logstash-helm-chart
+          targetRevision: HEAD
+          helm:
+            valueFiles:
+              - values.yaml
+          path: logstash-helm-chart
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: monitoring
+        syncPolicy:
+          syncOptions:
+            - CreateNamespace=true
+          automated:
+            selfHeal: true
+            prune: true
+      # KIBANA APPLICATION
+      - name: kibana
+        project: default
+        source:
+          repoURL: https://github.com/AhmedGrati/kibana-helm-chart
+          targetRevision: HEAD
+          helm:
+            valueFiles:
+              - values.yaml
+          path: kibana-helm-chart
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: monitoring
+        syncPolicy:
+          syncOptions:
+            - CreateNamespace=true
+          automated:
+            selfHeal: true
+            prune: true
+      # ZABBIX APPLICATION
+      - name: zabbix
+        project: default
+        source:
+          repoURL: https://github.com/AhmedGrati/zabbix-helm-chart
+          targetRevision: HEAD
+          helm:
+            valueFiles:
+              - values.yaml
+          path: zabbix-helm-chart
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: monitoring
+        syncPolicy:
+          syncOptions:
+            - CreateNamespace=true
+          automated:
+            selfHeal: true
+            prune: true
+      # ARGOCD APPLICATION
+      - name: argocd
+        project: default
+        source:
+          repoURL: https://github.com/AhmedGrati/argocd-helm-chart
+          targetRevision: HEAD
+          helm:
+            valueFiles:
+              - values.yaml
+          path: argocd-helm-chart
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: argocd
+        syncPolicy:
+          syncOptions:
+            - CreateNamespace=true
+          automated:
+            selfHeal: true
+            prune: true
+
     service:
       type: NodePort
