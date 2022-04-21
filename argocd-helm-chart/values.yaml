@@ -65,7 +65,7 @@ argo-cd:
       - name: postgresql
         project: default
         source:
-          repoURL: https://github.com/AhmedGrati/postgresql-helm-chart
+          repoURL: https://github.com/AhmedGrati/posqtgresql-helm-chart
           targetRevision: HEAD
           helm:
             valueFiles:
